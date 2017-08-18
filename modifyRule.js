@@ -25,7 +25,11 @@ const destroyRule = (api) => (rules = []) => {
   }
 };
 
-const install = (api, config) => api.getAll().then(persistRule(api, generateRule(config)));
+const install = (api, config) => {
+  const rule = generateRule({ username: RULE_NAME, ...config });
+
+  return api.getAll().then(persistRule(api, rule));
+};
 const uninstall = (api) => api.getAll().then(destroyRule(api));
 
 export { install, uninstall };
